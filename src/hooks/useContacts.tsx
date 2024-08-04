@@ -1,11 +1,15 @@
-import { fetchContacts, addContact, deleteContact } from '@/store/contacts/action';
+import {
+  fetchContacts,
+  addContact,
+  deleteContact,
+} from "@/store/contacts/action";
 import {
   selectAllContacts,
   selectContactStatus,
-  selectContactError
-} from '@/store/contacts/selector';
-import { useAppDispatch, useAppSelector } from '@/store/redux-hook';
-import type { Contact } from '@/types';
+  selectContactError,
+} from "@/store/contacts/selector";
+import { useAppDispatch, useAppSelector } from "@/store/redux-hook";
+import type { Contact } from "@/types";
 
 export function useContacts() {
   const dispatch = useAppDispatch();
@@ -17,9 +21,16 @@ export function useContacts() {
     dispatch(fetchContacts());
   };
 
-  const createContact = (contact: Partial<Contact>) => dispatch(addContact(contact));
+  const createContact = (contact: Contact) => dispatch(addContact(contact));
 
   const removeContact = (id: string) => dispatch(deleteContact(id));
 
-  return { contacts, status, error, loadContacts, createContact, removeContact };
+  return {
+    contacts,
+    status,
+    error,
+    loadContacts,
+    createContact,
+    removeContact,
+  };
 }
