@@ -1,11 +1,14 @@
-import FeedOutlinedIcon from '@mui/icons-material/FeedOutlined';
+import FeedOutlinedIcon from "@mui/icons-material/FeedOutlined";
 
-import { feedOutlinedIcon } from '../headerStyles';
+import { feedOutlinedIcon } from "../headerStyles";
+import { Link } from "react-router-dom";
 
 export const Logo = () => {
   return (
     <>
-      <FeedOutlinedIcon sx={feedOutlinedIcon} />
+      <Link to="/">
+        <FeedOutlinedIcon sx={feedOutlinedIcon} />
+      </Link>
     </>
   );
 };

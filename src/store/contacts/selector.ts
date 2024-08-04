@@ -1,8 +1,8 @@
-import { createSelector } from 'reselect';
+import { createSelector } from "reselect";
 
-import type { Contact } from '@/types';
+import type { Contact } from "@/types";
 
-import type { RootState } from '../store';
+import type { RootState } from "../store";
 
 const selectContactsState = (state: RootState) => state.contacts;
 
@@ -11,7 +11,7 @@ export const selectAllContacts = createSelector(
   (contactsState) => contactsState.contacts
 );
 
-export const selectContactById = (id: string) =>
+export const selectContactById = (id: string | undefined) =>
   createSelector([selectAllContacts], (contacts: Contact[]) =>
     contacts.find((contact) => contact.id === id)
   );

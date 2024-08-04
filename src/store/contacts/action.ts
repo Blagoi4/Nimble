@@ -1,15 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { deleteFromAPI } from "@/shared/utils/fetch";
 import type { Contact, ContactsAPIResponse } from "@/types";
 import { RemoteContactRepository, RestAPIAdapter } from "@/api";
 
-const converterRepository = new RemoteContactRepository(new RestAPIAdapter());
+const contactsRepository = new RemoteContactRepository(new RestAPIAdapter());
 
 export const fetchContacts = createAsyncThunk<
   ContactsAPIResponse,
   void,
   { rejectValue: string }
+>("contacts/fetchContacts", async (_, { rejectWithValue }) => {
 >("contacts/fetchContacts", async (_, { rejectWithValue }) => {
   try {
     const params = new URLSearchParams({
@@ -17,7 +19,7 @@ export const fetchContacts = createAsyncThunk<
     });
     const url = `contacts?${params.toString()}`;
     const response: ContactsAPIResponse =
-      await converterRepository.fetchContactsData(url);
+      await contactsRepository.fetchContactsData(url);
     console.log("Response from API:", response);
     return response;
   } catch (error: any) {
@@ -30,12 +32,14 @@ export const fetchContacts = createAsyncThunk<
 export const addContact = createAsyncThunk<
   Contact,
   Contact,
+  Contact,
   { rejectValue: string }
+>("contacts/addContact", async (newContact, { rejectWithValue }) => {
 >("contacts/addContact", async (newContact, { rejectWithValue }) => {
   try {
     console.log("Sending data:", newContact);
 
-    const response = await converterRepository.saveContactsData(
+    const response = await contactsRepository.saveContactsData(
       "contact",
       newContact
     );
@@ -43,6 +47,8 @@ export const addContact = createAsyncThunk<
 
     return response;
   } catch (error: any) {
+    console.error("Error in addContact:", error.message || "Unknown error");
+    return rejectWithValue(error.message || "Failed to add contact");
     console.error("Error in addContact:", error.message || "Unknown error");
     return rejectWithValue(error.message || "Failed to add contact");
   }
@@ -55,9 +61,64 @@ export const deleteContact = createAsyncThunk<
   { rejectValue: string }
 >("contacts/deleteContact", async (contactId, { rejectWithValue }) => {
   try {
-    await deleteFromAPI(`contacts/${contactId}`);
+    await contactsRepository.deleteContactsData(`contact/${contactId}`);
     return contactId;
   } catch (error: any) {
     return rejectWithValue(error.message || "Failed to delete contact");
+  }
+});
+
+// Update a contact
+// export const updateContact = createAsyncThunk<
+//   string,
+//   string,
+//   { rejectValue: string }
+// >("contacts/updateContact", async (contactId, { rejectWithValue }) => {
+//   try {
+//     await contactsRepository.updateContactsData(
+//       `contact/${contactId}/tags`,
+//       newTags
+//     );
+//     return contactId;
+//   } catch (error: any) {
+//     return rejectWithValue(error.message || "Failed to delete contact");
+//   }
+// });
+export const updateContact = createAsyncThunk<
+  Contact,
+  { id: string; tags2: string[] },
+  { rejectValue: string }
+>("contacts/updateContact", async ({ id, tags2 }, { rejectWithValue }) => {
+  try {
+    const response = await contactsRepository.updateContactsData(
+      `contacts/${id}`,
+      { tags2 }
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Error updating contact: ${errorText}`);
+    }
+
+    const updatedContact = await response.json();
+    return updatedContact;
+  } catch (error: any) {
+    return rejectWithValue(error.message || "Failed to update contact");
+  }
+});
+
+export const fetchContactById = createAsyncThunk<
+  Contact,
+  string,
+  { rejectValue: string }
+>("contacts/fetchContactById", async (contactId, { rejectWithValue }) => {
+  try {
+    const url = `contact/${contactId}`;
+    const response: Contact = await contactsRepository.fetchContactsData(url);
+    console.log("Response from API:", response);
+    return response;
+  } catch (error: any) {
+    console.error("Error fetching contact by ID:", error);
+    return rejectWithValue(error.message || "Failed to fetch contact");
   }
 });

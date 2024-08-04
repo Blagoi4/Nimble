@@ -1,9 +1,15 @@
-import { deleteFromAPI, getFromAPI, postToAPI } from '@/shared/utils/fetch';
+import {
+  deleteFromAPI,
+  getFromAPI,
+  postToAPI,
+  updateFromAPI,
+} from "@/shared/utils/fetch";
 
 export interface RemoteClient {
   get(endpoint: string): Promise<any>;
   post(endpoint: string, data: any): Promise<any>;
   delete(endpoint: string): Promise<boolean>;
+  update(id: string, newTags: any): Promise<any>;
 }
 
 export class RestAPIAdapter implements RemoteClient {
@@ -18,12 +24,17 @@ export class RestAPIAdapter implements RemoteClient {
   async delete(endpoint: string) {
     return deleteFromAPI(endpoint);
   }
+
+  async update(id: string, newTags: any) {
+    return updateFromAPI(id, newTags);
+  }
 }
 
 export interface ContactRepository {
   fetchContactsData(key: string): any;
   saveContactsData(key: string, data: any): void;
   deleteContactsData(key: string): void;
+  updateContactsData(key: string, newTags: any): void;
 }
 
 export class RemoteContactRepository implements ContactRepository {
@@ -39,5 +50,9 @@ export class RemoteContactRepository implements ContactRepository {
 
   async deleteContactsData(endpoint: string) {
     return this.client.delete(endpoint);
+  }
+
+  async updateContactsData(id: string, newTags: any): Promise<any> {
+    return this.client.update(id, newTags);
   }
 }

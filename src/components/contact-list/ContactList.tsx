@@ -7,10 +7,9 @@ import { Contact } from "@/types";
 
 function ContactList() {
   const { contacts, removeContact } = useContacts();
-  const handleDelete = (id: string) => {
+  const handleDeleteContact = (id: string) => {
     removeContact(id);
   };
-  console.log("contacts", contacts);
 
   const mapContactData = (data: Contact) => {
     return {
@@ -24,7 +23,6 @@ function ContactList() {
   };
 
   const mappedContacts = contacts.map((contact) => mapContactData(contact));
-  console.log(mappedContacts);
 
   return (
     <Container sx={{ display: "flex", flexDirection: "column", flex: 3 }}>
@@ -40,7 +38,7 @@ function ContactList() {
           <ContactCardInfo
             key={contact.id || index}
             contact={contact}
-            handleDelete={handleDelete}
+            handleDelete={handleDeleteContact}
           />
         ))}
       </Box>
