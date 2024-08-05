@@ -1,6 +1,6 @@
 import { Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 
-import ContactCard from '@/components/contact-card';
+import ContactCard from '@/components/contact-card/ContactCard';
 import { Error } from '@/pages/Error';
 import { Main } from '@/pages/Main';
 import { Root } from '@/pages/Root';

@@ -6,7 +6,7 @@ import { Contact, ContactField } from "@/types";
 import { Container, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { fetchContacts } from "@/store/contacts/action";
-import { hasValidNameAndEmail } from "../../shared/validator";
+import { hasValidNameAndEmail } from "../../shared/utils/validators";
 import { AppDispatch } from "@/store/store";
 
 const createContactField = (label: string, value: string): ContactField => ({

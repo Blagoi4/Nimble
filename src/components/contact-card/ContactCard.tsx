@@ -16,10 +16,10 @@ import { useAppDispatch, useAppSelector } from "@/store/redux-hook";
 import { selectContactById } from "@/store/contacts/selector";
 import { fetchContactById, updateContact } from "@/store/contacts/action";
 import { CustomBtn } from "@/shared/ui-kit/button/CustomBtn";
-import { mapperData } from "../../shared/helper/mapperData";
+import { mapperData } from "../../shared/utils/mapperData";
 import { useContacts } from "@/hooks/useContacts";
 
-const ContactCard = () => {
+const ContactItem = () => {
   const [newTag, setNewTag] = useState("");
   const { id } = useParams<{ id: string }>();
   const contactsItem = useAppSelector(selectContactById(id!));
@@ -165,4 +165,4 @@ const ContactCard = () => {
   );
 };
 
-export default ContactCard;
+export default ContactItem;

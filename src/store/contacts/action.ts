@@ -24,27 +24,6 @@ export const fetchContacts = createAsyncThunk<
   }
 });
 
-// Add a new contact
-// export const addContact = createAsyncThunk<
-//   Contact,
-//   Contact,
-//   { rejectValue: string }
-// >("contacts/addContact", async (newContact, { rejectWithValue }) => {
-//   try {
-//     console.log("Sending data:", newContact);
-
-//     const response = await contactsRepository.saveContactsData(
-//       "contact",
-//       newContact
-//     );
-//     console.log("Received response:", response);
-
-//     return response;
-//   } catch (error: any) {
-//     console.error("Error in addContact:", error.message || "Unknown error");
-//     return rejectWithValue(error.message || "Failed to add contact");
-//   }
-// });
 export const addContact = createAsyncThunk<
   Contact,
   Contact,

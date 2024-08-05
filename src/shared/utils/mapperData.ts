@@ -1,5 +1,3 @@
-// src/utils/mapperData.ts
-
 import { Contact } from "@/types";
 
 export const mapperData = (data: Contact) => {
