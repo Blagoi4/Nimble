@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, Box } from "@mui/material";
 import { useEffect } from "react";
 
 import { useContacts } from "@/hooks/useContacts";
@@ -25,7 +25,18 @@ export const Main = () => {
         justifyContent: { xs: "center", md: "flex-start" },
       }}
     >
-      <CreateContact />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flex: 1,
+          width: "100%",
+          position: { md: "sticky" },
+          top: { md: "30px" },
+        }}
+      >
+        <CreateContact />
+      </Box>
       <ContactList />
     </Container>
   );
