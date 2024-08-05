@@ -29,7 +29,7 @@ const ContactCardInfo: React.FC<ContactCardProps> = ({
   handleDelete,
 }) => {
   const navigate = useNavigate();
-
+console.log('My Tags',contact.tags)
   return (
     <Card
       sx={{ margin: 2, position: "relative", bgcolor: "#EDEDED" }}

@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
-  Button,
   Card,
   CardContent,
   Avatar,
@@ -12,25 +11,33 @@ import {
 } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 import { useParams } from "react-router-dom";
-import { useAppSelector } from "@/store/redux-hook";
+import { useAppDispatch, useAppSelector } from "@/store/redux-hook";
 import { selectContactById } from "@/store/contacts/selector";
 import { Contact } from "@/types";
-// import { useContacts } from "@/hooks/useContacts";
+import { fetchContactById, updateContact } from "@/store/contacts/action";
+import { CustomBtn } from "@/shared/ui-kit/button/CustomBtn";
+
+
 
 const ContactCard = () => {
   const [newTag, setNewTag] = useState("");
-  // const { updateContacts } = useContacts();
   const { id } = useParams<{ id: string }>();
   const contactsItem = useAppSelector(selectContactById(id));
   console.log("contactsItem", contactsItem);
-
+  const dispatch = useAppDispatch();
   const handleAddTag = () => {
     if (newTag.trim()) {
       const updatedTags = [...tags, newTag.trim()];
-      // updateContacts(id, updatedTags);
+      dispatch(updateContact({ id: id!, tags: updatedTags }));
       setNewTag("");
     }
   };
+
+  useEffect(() => {
+    if (!contactsItem) {
+      dispatch(fetchContactById(id!));
+    }
+  }, []);
 
   const mapContactData = (data: Contact) => {
     return {
@@ -109,14 +116,7 @@ const ContactCard = () => {
             onChange={(e) => setNewTag(e.target.value)}
             sx={{ mt: 2, width: "100%" }}
           />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleAddTag}
-            sx={{ mt: 2, width: "100%" }}
-          >
-            Add Tag
-          </Button>
+          <CustomBtn onClick={handleAddTag}>Add Tag</CustomBtn>
         </CardContent>
       </Card>
     </Container>

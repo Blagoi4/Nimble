@@ -1,22 +1,21 @@
 import { Button } from '@mui/material';
-
 import type { MouseEventHandler } from 'react';
 
 type BtnProps = {
   children: React.ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
   disabled?: boolean;
+  fullWidth?: boolean;
 };
 
-const btn = {
-  mt: '1rem',
-  mb: '1rem',
-  display: { xs: 'flex', md: 'flex' }
-};
-
-export const CustomBtn = ({ children, ...props }: BtnProps) => {
+export const CustomBtn = ({ children, fullWidth = true, ...props }: BtnProps) => {
   return (
-    <Button variant='outlined' size='medium' sx={btn} {...props}>
+    <Button
+      variant="contained"
+      color="primary"
+      sx={{ mt: 2, width: fullWidth ? '100%' : 'auto' }}
+      {...props}
+    >
       {children}
     </Button>
   );
