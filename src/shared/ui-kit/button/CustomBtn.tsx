@@ -6,6 +6,13 @@ type BtnProps = {
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
   disabled?: boolean;
   fullWidth?: boolean;
+  sx?: object;
+};
+
+const btn = {
+  mt: '2rem',
+  mb: '1rem',
+  display: { xs: 'flex', md: 'flex' }
 };
 
 export const CustomBtn = ({ children, fullWidth = true, ...props }: BtnProps) => {
@@ -13,7 +20,7 @@ export const CustomBtn = ({ children, fullWidth = true, ...props }: BtnProps) =>
     <Button
       variant="contained"
       color="primary"
-      sx={{ mt: 2, width: fullWidth ? '100%' : 'auto' }}
+      sx={{ ...btn, width: fullWidth ? '100%' : 'auto' }}
       {...props}
     >
       {children}

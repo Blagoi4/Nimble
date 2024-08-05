@@ -1,7 +1,5 @@
 import { createSelector } from "reselect";
-
 import type { Contact } from "@/types";
-
 import type { RootState } from "../store";
 
 const selectContactsState = (state: RootState) => state.contacts;

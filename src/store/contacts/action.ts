@@ -1,6 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
-import { deleteFromAPI } from "@/shared/utils/fetch";
 import type { Contact, ContactsAPIResponse } from "@/types";
 import { RemoteContactRepository, RestAPIAdapter } from "@/api";
 
@@ -27,6 +25,26 @@ export const fetchContacts = createAsyncThunk<
 });
 
 // Add a new contact
+// export const addContact = createAsyncThunk<
+//   Contact,
+//   Contact,
+//   { rejectValue: string }
+// >("contacts/addContact", async (newContact, { rejectWithValue }) => {
+//   try {
+//     console.log("Sending data:", newContact);
+
+//     const response = await contactsRepository.saveContactsData(
+//       "contact",
+//       newContact
+//     );
+//     console.log("Received response:", response);
+
+//     return response;
+//   } catch (error: any) {
+//     console.error("Error in addContact:", error.message || "Unknown error");
+//     return rejectWithValue(error.message || "Failed to add contact");
+//   }
+// });
 export const addContact = createAsyncThunk<
   Contact,
   Contact,
@@ -48,7 +66,7 @@ export const addContact = createAsyncThunk<
   }
 });
 
-// Delete a contact
+
 export const deleteContact = createAsyncThunk<
   string,
   string,
@@ -62,22 +80,7 @@ export const deleteContact = createAsyncThunk<
   }
 });
 
-// Update a contact
-// export const updateContact = createAsyncThunk<
-//   string,
-//   string,
-//   { rejectValue: string }
-// >("contacts/updateContact", async (contactId, { rejectWithValue }) => {
-//   try {
-//     await contactsRepository.updateContactsData(
-//       `contact/${contactId}/tags`,
-//       newTags
-//     );
-//     return contactId;
-//   } catch (error: any) {
-//     return rejectWithValue(error.message || "Failed to delete contact");
-//   }
-// });
+
 export const updateContact = createAsyncThunk<
   Contact,
   { id: string; tags: string[] },

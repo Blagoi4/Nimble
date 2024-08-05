@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   Box,
   Card,
@@ -13,49 +13,39 @@ import { deepOrange } from "@mui/material/colors";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/store/redux-hook";
 import { selectContactById } from "@/store/contacts/selector";
-import { Contact } from "@/types";
 import { fetchContactById, updateContact } from "@/store/contacts/action";
 import { CustomBtn } from "@/shared/ui-kit/button/CustomBtn";
-
-
+import { mapperData } from "../../shared/helper/mapperData";
 
 const ContactCard = () => {
   const [newTag, setNewTag] = useState("");
   const { id } = useParams<{ id: string }>();
   const contactsItem = useAppSelector(selectContactById(id));
-  console.log("contactsItem", contactsItem);
   const dispatch = useAppDispatch();
-  const handleAddTag = () => {
-    if (newTag.trim()) {
-      const updatedTags = [...tags, newTag.trim()];
-      dispatch(updateContact({ id: id!, tags: updatedTags }));
-      setNewTag("");
-    }
-  };
 
   useEffect(() => {
     if (!contactsItem) {
       dispatch(fetchContactById(id!));
     }
-  }, []);
+  }, [contactsItem, dispatch, id]);
 
-  const mapContactData = (data: Contact) => {
-    return {
-      email: data.fields?.email?.[0]?.value || "",
-      firstName: data.fields?.["first name"]?.[0]?.value || "",
-      lastName: data.fields?.["last name"]?.[0]?.value || "",
-      avatar: data.avatar_url || "",
-      tags: data.tags2 || [],
-      id: data.id,
-    };
+  const mappedContact = useMemo(() => {
+    return contactsItem ? mapperData(contactsItem) : null;
+  }, [contactsItem]);
+
+  const handleAddTag = () => {
+    if (newTag.trim() && mappedContact) {
+      const updatedTags = [...mappedContact.tags, newTag.trim()];
+      dispatch(updateContact({ id: id!, tags: updatedTags }));
+      setNewTag("");
+    }
   };
 
-  if (!contactsItem) {
+  if (!mappedContact) {
     return <Typography variant="h6">Contact not found</Typography>;
   }
 
-  const { email, firstName, lastName, avatar, tags } =
-    mapContactData(contactsItem);
+  const { email, firstName, lastName, avatar, tags } = mappedContact;
 
   return (
     <Container

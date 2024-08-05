@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import contactsReducer from '@/store/contacts/slice'; // Убедитесь, что путь к файлу верный
+import contactsReducer from '@/store/contacts/slice';
 
 const rootReducer = combineReducers({
   contacts: contactsReducer

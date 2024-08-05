@@ -1,23 +1,24 @@
-import TextField from '@mui/material/TextField';
+import TextField from "@mui/material/TextField";
 
 interface InputProps {
-  id: string;
-  value: number | string;
-  type: string;
+  label: string;
+  value: string | number;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: boolean;
+  helperText?: string;
 }
 
-export default function Input({ id, value, onChange, type }: InputProps) {
+export default function Input({ label, value, onChange, error, helperText }: InputProps) {
   return (
     <TextField
       sx={{
-        justifyContent: 'center'
+        justifyContent: "center",
       }}
-      id={id}
+      label={label}
       value={value}
-      type={type}
       onChange={onChange}
-      fullWidth
+      error={error}
+      helperText={helperText}
     />
   );
 }

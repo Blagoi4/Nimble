@@ -57,28 +57,7 @@ export async function deleteFromAPI(endpoint: string) {
   }
 }
 
-// export async function updateFromAPI(id: string, newTags: any) {
-//   try {
-//     const response = await fetch(`${API_URL}/contacts/${id}`, {
-//       method: "PUT",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${AUTH_TOKEN}`,
-//       },
-//       body: JSON.stringify({ tags: newTags }),
-//     });
 
-//     if (!response.ok) {
-//       const errorText = await response.text();
-//       throw new Error(`Error updating contact: ${errorText}`);
-//     }
-
-//     const updatedContact = await response.json();
-//     return updatedContact;
-//   } catch (error) {
-//     console.error("Failed to update contact tags:", error);
-//   }
-// }
 export const updateFromAPI = async (
   id: string,
   newTags: any

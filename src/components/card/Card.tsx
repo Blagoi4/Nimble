@@ -19,6 +19,7 @@ type ContactProps = {
   tags: string[];
   id: string;
 };
+
 type ContactCardProps = {
   contact: ContactProps;
   handleDelete: (id: string) => void;
@@ -29,7 +30,7 @@ const ContactCardInfo: React.FC<ContactCardProps> = ({
   handleDelete,
 }) => {
   const navigate = useNavigate();
-console.log('My Tags',contact.tags)
+
   return (
     <Card
       sx={{ margin: 2, position: "relative", bgcolor: "#EDEDED" }}
