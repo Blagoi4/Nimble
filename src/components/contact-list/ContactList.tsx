@@ -3,9 +3,10 @@ import { useContacts } from "@/hooks/useContacts";
 import ContactCardInfo from "../card/Card";
 import { mapperData } from "../../shared/helper/mapperData";
 import { useMemo } from "react";
+import { Loader } from "@/shared/ui-kit/status/Loader";
 
 function ContactList() {
-  const { contacts, removeContact } = useContacts();
+  const { contacts, removeContact, status } = useContacts();
   const handleDeleteContact = (id: string) => {
     removeContact(id);
   };
@@ -13,31 +14,6 @@ function ContactList() {
     () => contacts.map((contact) => mapperData(contact)),
     [contacts]
   );
-
-  // const mapContactData = (data: Contact) => {
-  //   if (!data) {
-  //     return {
-  //       email: "",
-  //       firstName: "",
-  //       lastName: "",
-  //       avatar: "",
-  //       tags: [],
-  //       id: "",
-  //     };
-  //   }
-
- 
-  //   return {
-  //     email: data.fields?.email?.[0]?.value || "",
-  //     firstName: data.fields?.["first name"]?.[0]?.value || "",
-  //     lastName: data.fields?.["last name"]?.[0]?.value || "",
-  //     avatar: data.avatar_url || "",
-  //     tags: data.tags2 || [],
-  //     id: data.id,
-  //   };
-  // };
-
-  // const mappedContacts = contacts.map((contact) => mapperData(contact));
 
   return (
     <Container sx={{ display: "flex", flexDirection: "column", flex: 3 }}>
@@ -48,15 +24,20 @@ function ContactList() {
       >
         Contacts
       </Typography>
-      <Box>
-        {mappedContacts.map((contact, index) => (
-          <ContactCardInfo
-            key={contact.id || index}
-            contact={contact}
-            handleDelete={handleDeleteContact}
-          />
-        ))}
-      </Box>
+
+      {status.fetchContacts ? (
+        <Loader />
+      ) : (
+        <Box>
+          {mappedContacts.map((contact, index) => (
+            <ContactCardInfo
+              key={contact.id || index}
+              contact={contact}
+              handleDelete={handleDeleteContact}
+            />
+          ))}
+        </Box>
+      )}
     </Container>
   );
 }

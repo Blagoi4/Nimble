@@ -50,7 +50,6 @@ const ContactCardInfo: React.FC<ContactCardProps> = ({
           <Typography variant="body2" color={"black"} sx={{ mt: 1 }}>
             {contact.email}
           </Typography>
-
           <Box
             sx={{
               display: "flex",
@@ -72,6 +71,7 @@ const ContactCardInfo: React.FC<ContactCardProps> = ({
             )}
           </Box>
         </Box>
+
         <IconButton
           aria-label="delete"
           sx={{ position: "absolute", top: 8, right: 8 }}

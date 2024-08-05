@@ -1,25 +1,16 @@
-import { createSelector } from "reselect";
+import { RootState } from "../store";
 import type { Contact } from "@/types";
-import type { RootState } from "../store";
 
 const selectContactsState = (state: RootState) => state.contacts;
 
-export const selectAllContacts = createSelector(
-  selectContactsState,
-  (contactsState) => contactsState.contacts
-);
+export const selectAllContacts = (state: RootState) =>
+  selectContactsState(state).contacts;
 
-export const selectContactById = (id: string | undefined) =>
-  createSelector([selectAllContacts], (contacts: Contact[]) =>
-    contacts.find((contact) => contact.id === id)
-  );
+export const selectContactStatus = (state: RootState) =>
+  selectContactsState(state).isLoading;
 
-export const selectContactStatus = createSelector(
-  selectContactsState,
-  (contactsState) => contactsState.isLoading
-);
+export const selectContactError = (state: RootState) =>
+  selectContactsState(state).error;
 
-export const selectContactError = createSelector(
-  selectContactsState,
-  (contactsState) => contactsState.error
-);
+export const selectContactById = (id: string) => (state: RootState) =>
+  selectAllContacts(state).find((contact) => contact.id === id);

@@ -16,7 +16,14 @@ export const Main = () => {
 
   return (
     <Container
-      sx={{ display: "flex", flexDirection: "row", marginTop: "30px" }}
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        marginTop: "30px",
+        gap: 2,
+        alignItems: { xs: "center", md: "flex-start" },
+        justifyContent: { xs: "center", md: "flex-start" },
+      }}
     >
       <CreateContact />
       <ContactList />

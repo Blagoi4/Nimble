@@ -10,9 +10,15 @@ type BtnProps = {
 };
 
 const btn = {
-  mt: '2rem',
+  mt: '1rem',
   mb: '1rem',
-  display: { xs: 'flex', md: 'flex' }
+  backgroundColor:'white',
+  color: 'black',
+  border: '1px solid #AAAAAA',
+  display: { xs: 'flex', md: 'flex' },
+  ':hover': {
+    backgroundColor: '#A6A6A6', // Цвет при наведении
+  }
 };
 
 export const CustomBtn = ({ children, fullWidth = true, ...props }: BtnProps) => {

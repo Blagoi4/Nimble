@@ -1,3 +1,4 @@
+import { useAppDispatch, useAppSelector } from "@/store/redux-hook";
 import {
   fetchContacts,
   addContact,
@@ -9,9 +10,7 @@ import {
   selectContactStatus,
   selectContactError,
 } from "@/store/contacts/selector";
-import { useAppDispatch, useAppSelector } from "@/store/redux-hook";
 import type { Contact } from "@/types";
-
 
 export function useContacts() {
   const dispatch = useAppDispatch();
@@ -24,7 +23,6 @@ export function useContacts() {
   };
 
   const createContact = (contact: Contact) => dispatch(addContact(contact));
-  
 
   const removeContact = (id: string) => dispatch(deleteContact(id));
 
